@@ -4,10 +4,8 @@ import time
 # List all your Streamlit App URLs here
 apps = [
     "https://bio-concepts-simplifiedv2-yash.streamlit.app/",
-    "https://bio-researcher-database-yash.streamlit.app/",
-    "https://bio-tikz-simplifiedv2-yash.streamlit.app/",
-    "https://bio-tikz-studio-yash.streamlit.app/",
-    "https://cd40-immunosome-tool.streamlit.app/",
+    "https://zebrafish-3d-morphometry-suite-yash.streamlit.app/",
+    "https://huntington-research-app-backup-yash.streamlit.app/",
     "https://huntington-research-app.streamlit.app/"
 ]
 
