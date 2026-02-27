@@ -1,24 +1,37 @@
-import requests
+from playwright.sync_api import sync_playwright
 import time
 
-# List all your Streamlit App URLs here
-apps = [
-    "https://bio-concepts-simplifiedv2-yash.streamlit.app/",
-    "https://zebrafish-3d-morphometry-suite-yash.streamlit.app/",
-    "https://huntington-research-app-backup-yash.streamlit.app/",
-    "https://huntington-research-app.streamlit.app/"
+# Sirf ye 4 URLs jo sleep par hain
+urls = [
+    'https://bio-concepts-simplifiedv2-yash.streamlit.app/',
+    'https://zebrafish-3d-morphometry-suite-yash.streamlit.app/',
+    'https://huntington-research-app-backup.streamlit.app/',
+    'https://huntington-research-app.streamlit.app/'
 ]
 
 def wake_apps():
-    for url in apps:
-        try:
-            response = requests.get(url, timeout=20)
-            if response.status_code == 200:
-                print(f"Successfully pinged: {url}")
-            else:
-                print(f"Failed to ping {url}: Status {response.status_code}")
-        except Exception as e:
-            print(f"Error pinging {url}: {e}")
+    with sync_playwright() as p:
+        # Browser launch (headless mode)
+        browser = p.chromium.launch(headless=True)
+        context = browser.new_context(
+            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"
+        )
+        
+        for url in urls:
+            page = context.new_page()
+            try:
+                print(f"🚀 Waking up: {url}")
+                # Wait for 60 seconds or until the app fully loads
+                page.goto(url, wait_until="networkidle", timeout=90000)
+                # Extra 5 seconds to ensure Streamlit 'Spinning' icon disappears
+                time.sleep(5) 
+                print(f"✅ Success: {url} is now active.")
+            except Exception as e:
+                print(f"⚠️ Failed to wake {url}: {str(e)}")
+            finally:
+                page.close()
+        
+        browser.close()
 
 if __name__ == "__main__":
     wake_apps()
