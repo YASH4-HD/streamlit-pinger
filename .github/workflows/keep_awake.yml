@@ -2,9 +2,9 @@ name: Keep Streamlit Apps Awake
 
 on:
   schedule:
-    # This runs every 1 hour
+    # Runs every hour to ensure they never enter deep sleep
     - cron: '0 * * * *'
-  workflow_dispatch: # Allows you to run it manually
+  workflow_dispatch: # Allows manual run
 
 jobs:
   ping:
@@ -19,7 +19,10 @@ jobs:
           python-version: '3.9'
 
       - name: Install dependencies
-        run: pip install requests
+        run: |
+          python -m pip install --upgrade pip
+          pip install playwright
+          playwright install chromium
 
-      - name: Run ping script
+      - name: Run Pinger
         run: python ping_apps.py
