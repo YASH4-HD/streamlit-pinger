@@ -2,15 +2,12 @@ from playwright.sync_api import sync_playwright
 import time
 
 urls = [
-    'https://bio-concepts-simplifiedv2-yash.streamlit.app/',
-    'https://zebrafish-3d-morphometry-suite-yash.streamlit.app/',
-    'https://huntington-research-app-backup.streamlit.app/',
-    'https://huntington-research-app.streamlit.app/'
     'https://scrna-bias-detector.streamlit.app/',
     'https://pangen-ai-yash.streamlit.app/',
     'https://cd40-immunosome-tool-yash.streamlit.app/',
     'https://epicrispr-ml.streamlit.app/',
-    'https://pangen-ai-yash.streamlit.app/',
+    'https://zebrafish-3d-morphometry-suite-yash.streamlit.app/',
+    'https://huntington-research-app.streamlit.app/',
     'https://bio-concepts-simplifiedv2-yash.streamlit.app/',
 ]
 
@@ -21,7 +18,6 @@ def wake_apps():
         for url in urls:
             try:
                 print(f"Checking: {url}")
-                # networkidle ensures the Streamlit 'loading' spinner is gone
                 page.goto(url, wait_until="networkidle", timeout=90000)
                 time.sleep(5)
                 print(f"✅ Awake: {url}")
