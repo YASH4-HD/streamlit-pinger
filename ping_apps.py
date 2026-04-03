@@ -8,6 +8,7 @@ urls = [
     'https://epicrispr-ml.streamlit.app/',
     'https://zebrafish-3d-morphometry-suite-yash.streamlit.app/',
     'https://huntington-research-app.streamlit.app/',
+    'https://tnbc-drug-discovery.streamlit.app/',
     'https://bio-concepts-simplifiedv2-yash.streamlit.app/',
 ]
 
