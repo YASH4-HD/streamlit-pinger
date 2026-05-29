@@ -10,6 +10,14 @@ urls = [
     'https://huntington-research-app.streamlit.app/',
     'https://tnbc-drug-discovery.streamlit.app/',
     'https://bio-concepts-simplifiedv2-yash.streamlit.app/',
+    'https://bio-concepts-simplified-yash.streamlit.app/',
+    'https://bio-researcher-database-yash.streamlit.app/',
+    'https://bio-tikz-simplifiedv2-yash.streamlit.app/',
+    'https://bio-tikz-studio-yash.streamlit.app/',
+    'https://huntington-research-app-backup-yash.streamlit.app/',
+    'https://immunopet-tracer-optimizer-yash.streamlit.app/',
+    'https://multiscale-biodigital-bridge-yash.streamlit.app/',
+    'https://neurometabolic-validation-v2-yash.streamlit.app/',
 ]
 
 def wake_apps():
