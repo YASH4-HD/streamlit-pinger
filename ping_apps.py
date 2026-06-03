@@ -6,6 +6,7 @@ urls = [
     'https://pangen-ai-yash.streamlit.app/',
     'https://cd40-immunosome-tool-yash.streamlit.app/',
     'https://epicrispr-ml.streamlit.app/',
+    'https://oral-nanopharm-pipeline.streamlit.app/',
     'https://zebrafish-3d-morphometry-suite-yash.streamlit.app/',
     'https://huntington-research-yash.streamlit.app/',
     'https://tnbc-drug-discovery.streamlit.app/',
