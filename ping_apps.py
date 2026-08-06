@@ -1,5 +1,5 @@
-from playwright.sync_api import sync_playwright
-import time
+import asyncio
+from playwright.async_api import async_playwright
 
 urls = [
     'https://scrna-bias-detector.streamlit.app/',
@@ -21,19 +21,35 @@ urls = [
     'https://neurometabolic-validation-v2-yash.streamlit.app/',
 ]
 
-def wake_apps():
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
-        page = browser.new_page()
-        for url in urls:
-            try:
-                print(f"Checking: {url}")
-                page.goto(url, wait_until="networkidle", timeout=90000)
-                time.sleep(5)
-                print(f"✅ Awake: {url}")
-            except Exception as e:
-                print(f"❌ Error waking {url}: {e}")
-        browser.close()
+# Cap how many pages open at once so the runner doesn't get overloaded
+CONCURRENCY = 5
+
+
+async def ping_one(browser, url, semaphore):
+    async with semaphore:
+        page = await browser.new_page()
+        try:
+            # domcontentloaded instead of networkidle -- Streamlit keeps a
+            # websocket connection open, so networkidle basically never
+            # fires cleanly and just burns time waiting for the timeout.
+            await page.goto(url, wait_until="domcontentloaded", timeout=45000)
+            # Small wait to let the Streamlit app actually wake up / render
+            await page.wait_for_timeout(4000)
+            print(f"✅ Awake: {url}")
+        except Exception as e:
+            print(f"❌ Error waking {url}: {e}")
+        finally:
+            await page.close()
+
+
+async def wake_apps():
+    semaphore = asyncio.Semaphore(CONCURRENCY)
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=True)
+        tasks = [ping_one(browser, url, semaphore) for url in urls]
+        await asyncio.gather(*tasks)
+        await browser.close()
+
 
 if __name__ == "__main__":
-    wake_apps()
+    asyncio.run(wake_apps())
