@@ -2,10 +2,8 @@ name: Keep Streamlit Apps Awake
 
 on:
   schedule:
-    # Runs every 30 minutes -- parallel pinger finishes in a couple of
-    # minutes now, so this comfortably avoids overlap with the next run.
-    - cron: '*/30 * * * *'
-  workflow_dispatch: # Allows manual run
+    - cron: '*/20 * * * *'
+  workflow_dispatch:
 
 jobs:
   ping:
@@ -13,12 +11,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: '3.11'
 
       - name: Install dependencies
         run: |
